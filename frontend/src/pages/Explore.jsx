@@ -114,8 +114,10 @@ const Explore = () => {
   }, [fetchData]);
 
   const handleReset = () => {
+    // Immediate state reset for better UX
     setSearchParams({});
     setLocalQuery("");
+    setPincodes([]);
     toast.success("Filters cleared");
   };
 
@@ -241,19 +243,20 @@ const Explore = () => {
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
-              <AnimatePresence mode="wait">
+            <tbody className="divide-y divide-slate-100 relative min-h-[400px]">
+              <AnimatePresence initial={false}>
                 {loading ? (
                   <TableSkeleton rows={10} cols={6} />
                 ) : pincodes.length > 0 ? (
                   pincodes.map((item, idx) => (
                     <motion.tr 
-                      key={item._id || idx}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
+                      key={item._id}
+                      initial={{ opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0 }}
+                      transition={{ duration: 0.2, ease: "easeOut" }}
                       onClick={() => navigate(`/pincode/${item.pincode}`)}
-                      className="group cursor-pointer hover:bg-indigo-50/30 transition-colors"
+                      className="group cursor-pointer hover:bg-slate-50/80 transition-colors border-b border-slate-100 last:border-0"
                     >
                       <td className="px-8 py-6">
                         <span className="text-sm font-black text-slate-900 group-hover:text-indigo-600 transition-colors uppercase">

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { 
   getStatsOverview, 
   getStateDistribution, 
@@ -8,7 +9,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, 
   ResponsiveContainer, PieChart, Pie, Cell, Legend
 } from "recharts";
-import { StatsCard } from "../components/StatsCard";
+import { StatsCard } from "../components/StatDisplay";
 import { 
   Map as MapIcon, Database, CheckCircle2, 
   AlertCircle, Activity, LayoutDashboard 
@@ -18,6 +19,7 @@ import toast from "react-hot-toast";
 const COLORS = ["#4f46e5", "#06b6d4", "#8b5cf6", "#ec4899", "#f59e0b", "#10b981"];
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [stats, setStats] = useState(null);
   const [stateDist, setStateDist] = useState([]);
   const [deliveryDist, setDeliveryDist] = useState([]);
@@ -84,31 +86,35 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatsCard 
           title="Total PIN Codes" 
-          value={stats?.totalPincodes.toLocaleString()} 
+          value={stats?.totalPincodes} 
           icon={Database} 
-          trend="+1.2%" 
+          trend="up" 
+          trendValue="+1.2%" 
           color="indigo"
         />
         <StatsCard 
           title="Unique States" 
           value={stats?.totalStates} 
           icon={MapIcon} 
-          trend="Coverage: 100%" 
-          color="cyan"
+          trend="up"
+          trendValue="100%" 
+          color="indigo"
         />
         <StatsCard 
           title="Delivery Nodes" 
-          value={stats?.deliveryOffices.toLocaleString()} 
+          value={stats?.deliveryOffices} 
           icon={CheckCircle2} 
-          trend="Active" 
+          trend="up" 
+          trendValue="Active" 
           color="emerald"
         />
         <StatsCard 
           title="Registry Districts" 
           value={stats?.totalDistricts} 
           icon={Activity} 
-          trend="Verified" 
-          color="violet"
+          trend="up" 
+          trendValue="Verified" 
+          color="amber"
         />
       </div>
 

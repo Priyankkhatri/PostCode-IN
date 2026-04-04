@@ -86,6 +86,7 @@ const getFilteredPincodes = async (req, res, next) => {
       limit = 20,
       sortBy = "officeName",
       order = "asc",
+      q,
     } = req.query;
 
     const filter = {};
@@ -93,8 +94,26 @@ const getFilteredPincodes = async (req, res, next) => {
     if (district) filter.districtName = district;
     if (taluk) filter.taluk = taluk;
 
+    // Add universal search query support if provided
+    if (q && q.length >= 2) {
+      const safeQuery = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const searchFilter = !isNaN(q) && q.length === 6 
+        ? { pincode: Number(q) }
+        : {
+            $or: [
+              { officeName: { $regex: safeQuery, $options: "i" } },
+              { districtName: { $regex: safeQuery, $options: "i" } },
+              { taluk: { $regex: safeQuery, $options: "i" } },
+              { stateName: { $regex: safeQuery, $options: "i" } },
+            ],
+          };
+      
+      // Merge search filter with existing categorical filters
+      Object.assign(filter, searchFilter);
+    }
+
     // Validate sortBy field to prevent injection/errors
-    const allowedSortFields = ["officeName", "pincode", "districtName", "stateName", "taluk"];
+    const allowedSortFields = ["officeName", "pincode", "districtName", "stateName", "taluk", "deliveryStatus"];
     const activeSortField = allowedSortFields.includes(sortBy) ? sortBy : "officeName";
 
     const sortOptions = {};
