@@ -3,13 +3,50 @@ const cors = require("cors");
 const errorHandler = require("./middleware/error.middleware");
 const pincodeRoutes = require("./routes/pincode.routes");
 
+const helmet = require("helmet");
+
 const app = express();
 
-// Set up security/utility middleware
-const allowedOrigin = process.env.FRONTEND_URL || "http://localhost:5173";
+// Security and utility middleware
+app.use(helmet());
+
+// CORS configuration
+const getOrigins = () => {
+    const origins = process.env.FRONTEND_URL 
+        ? process.env.FRONTEND_URL.split(",").map(url => url.trim()) 
+        : [];
+    
+    // Always include common local ports for development
+    return [...new Set([
+        ...origins,
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "http://localhost:4173" // Vite preview port
+    ])];
+};
+
+const allowedOrigins = getOrigins();
+
 app.use(cors({
-    origin: allowedOrigin,
-    credentials: true
+    origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps or curl)
+        if (!origin) return callback(null, true);
+        
+        const isAllowed = allowedOrigins.some(allowed => {
+            if (allowed === "*") return true;
+            return origin === allowed || origin.endsWith(allowed.replace(/^https?:\/\//, ""));
+        });
+
+        if (isAllowed) {
+            callback(null, true);
+        } else {
+            console.warn(`⚠️ CORS blocked for origin: ${origin}`);
+            callback(new Error('The CORS policy for this site does not allow access from the specified Origin.'), false);
+        }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]
 }));
 app.use(express.json());
 

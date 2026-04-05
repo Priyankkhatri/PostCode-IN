@@ -103,7 +103,8 @@ export const getDeliveryDistribution = async () => {
  */
 export const getExportUrl = (filters) => {
   const query = new URLSearchParams(filters).toString();
-  return `/api/export?${query}`;
+  const baseURL = api.defaults.baseURL.replace(/\/$/, ""); // Remove trailing slash
+  return `${baseURL}/export?${query}`;
 };
 
 export default api;

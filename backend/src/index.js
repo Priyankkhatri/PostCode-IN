@@ -18,8 +18,13 @@ const startServer = async () => {
 
         // Then, start the server
         const server = app.listen(port, () => {
-            console.log(`🚀 Server initialized in ${config.env} mode`);
-            console.log(`📡 Powering through port ${port}`);
+            console.log("-----------------------------------------");
+            console.log(`🚀 API Status: ONLINE`);
+            console.log(`📡 Mode:       ${config.env.toUpperCase()}`);
+            console.log(`🔌 Port:       ${port}`);
+            console.log(`📁 DB:         ${config.database.dbName}`);
+            console.log(`📍 Collection: ${config.database.collectionName}`);
+            console.log("-----------------------------------------");
         });
 
         // Handle unhandled promise rejections
