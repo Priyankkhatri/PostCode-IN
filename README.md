@@ -1,7 +1,5 @@
 # 📮 PinIndia — Indian PIN Code Explorer
 
-![PinIndia Banner](https://raw.githubusercontent.com/Priyankkhatri/PostCode-IN/main/banner.png)
-
 ### 🔗 [Live Demo](https://post-code-in.vercel.app) | 📡 [API Status](https://postcode-in.onrender.com/api) | 📮 [Postman Docs](https://documenter.getpostman.com/view/50839274/2sBXqDri3M)
 
 [![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen?style=for-the-badge&logo=github)](#)
