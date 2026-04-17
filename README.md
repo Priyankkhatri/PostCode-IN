@@ -2,7 +2,7 @@
 
 ![PinIndia Banner](https://raw.githubusercontent.com/Priyankkhatri/PostCode-IN/main/banner.png)
 
-### 🔗 [Live Demo](https://post-code-in.vercel.app) | 📡 [API Status](https://postcode-in.onrender.com/api)
+### 🔗 [Live Demo](https://post-code-in.vercel.app) | 📡 [API Status](https://postcode-in.onrender.com/api) | 📮 [Postman Docs](https://documenter.getpostman.com/view/50839274/2sBXqDri3M)
 
 [![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen?style=for-the-badge&logo=github)](#)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
@@ -53,6 +53,8 @@ The project utilizes a decoupled **MERN** architecture, ensuring the frontend an
 ---
 
 ## 📡 API Endpoints
+> [!TIP]
+> **Complete API Documentation**: Access the full Postman collection and interactive documentation [here](https://documenter.getpostman.com/view/50839274/2sBXqDri3M).
 
 ### Core Data Lookup
 | Method | Endpoint | Description |
