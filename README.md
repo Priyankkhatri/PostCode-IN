@@ -84,4 +84,4 @@ npm run dev
 
 ---
 
-Built with ❤️ for **CodingGita × SU Semester 1** — Full Stack Excellence.
+- By **Priyank Khatri**
